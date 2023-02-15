@@ -1,33 +1,27 @@
 class Solution(object):
-    sub_strings = []
 
     def lengthOfLongestSubstring(self, s):
         """
         :type s: str
         :rtype: int
         """
-        self.subString(s)
-        got = set()
-        prev_large = 0
-        largest_len = 0
-        for a in self.sub_strings:
-            got.add(a)
-            if len(a) > largest_len:
-                prev_large = largest_len
-                largest_len = len(a)
-            for i in range(len(a)):
-                next_index = i + 1
-                for j in range(next_index, len(a)):
-                    if a[i] == a[j]:
-                        if a in got:
-                            got.remove(a)
-                            largest_len = prev_large
+        if " " in s:
+            s = s.split(" ")[0] + " "
+        substring = set()
+        largest = 0
+        for i in range(len(s)):
+            for j in range(i + 1, len(s) + 1):
+                repeateds = set()
+                newStr = s[i:j]
+                substring.add(newStr)
+                isRepeated = False
+                for k in newStr:
+                    if k in repeateds:
+                        isRepeated = True
+                        if newStr in substring:
+                            substring.remove(newStr)
                             break
-        return largest_len
-
-    def subString(self, st):
-        n = len(st)
-        for i in range(n):
-            for j in range(i + 1, n + 1):
-                self.sub_strings.append(st[i:j])
-        return
+                    repeateds.add(k)
+                if not isRepeated and len(newStr) > largest:
+                    largest = len(newStr)
+        return largest
