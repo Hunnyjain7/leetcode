@@ -1,3 +1,4 @@
+# TLE
 class Solution(object):
     def fourSum(self, nums, target):
         """
@@ -5,38 +6,35 @@ class Solution(object):
         :type target: int
         :rtype: List[List[int]]
         """
+        if len(nums) < 4:
+            return []
+        if len(nums) == 4 and sum(list(nums)) != target:
+            return []
         nums.sort()
-        print(nums)
         s = set()
         for i in range(len(nums)):
             j = i + 1
             k = len(nums) - 1
-            l = k - 1
             while j < k:
-                m = l
-                while j < m:
-                    l_sum = nums[i] + nums[j] + nums[m] + nums[k]
-                    if l_sum == target and m < k:
-                        print("inner", i, j, m, k)
-                        s.add((nums[i], nums[j], nums[m], nums[k]))
-                    m -= 1
-                if k >= l:
+                n = j + 1
+                for l in range(n, k + 1):
+                    for m in range(l + 1, k + 1):
+                        if (nums[i] + nums[j] + nums[l] + nums[m]) == target:
+                            s.add((nums[i], nums[j], nums[l], nums[m]))
+                            break
+                add = nums[i] + nums[j] + nums[n] + nums[k]
+                if add == target:
+                    if n < k:
+                        s.add((nums[i], nums[j], nums[n], nums[k]))
                     k -= 1
-                    l -= 1
-                sum = nums[i] + nums[j] + nums[l] + nums[k]
-                if sum == target and l < k:
-                    print(i, j, l, k)
-                    s.add((nums[i], nums[j], nums[l], nums[k]))
                     j += 1
-                    l -= 1
-                elif sum < target:
+                elif add < target:
                     j += 1
-                elif sum > target:
-                    l -= 1
-
+                else:
+                    k -= 1
         return list(s)
 
 
-# [[[-3,-2,2,3],[-3,-1,1,3],[-3,0,0,3],[-3,0,1,2],[-2,-1,0,3],[-2,-1,1,2],[-2,0,0,2],[-1,0,0,1]]
 if __name__ == '__main__':
-    print(Solution().fourSum([-3, -2, -1, 0, 0, 1, 2, 3], 0))
+    print(Solution().fourSum(
+        [1000000000, 1000000000, 1000000000, 1000000000], -294967296))
