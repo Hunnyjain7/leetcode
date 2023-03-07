@@ -1,5 +1,5 @@
 class Solution:
-    def convert(self, s: str, numRows: int) -> str:
+    def convert(self, s: str, numRows: int) -> str:  # noqa
         spaces_count = numRows - 1
         spaces = numRows - 2
         s_index = 0
@@ -43,6 +43,5 @@ class Solution:
         return new_str
 
 
-# PAHNAPLSIIGYIR
 if __name__ == '__main__':
     print(Solution().convert("ABCD", 3))

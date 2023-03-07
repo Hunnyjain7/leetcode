@@ -1,5 +1,5 @@
 class Solution(object):
-    def threeSum(self, nums):
+    def threeSum(self, nums):  # noqa
         """
         :type nums: List[int]
         :rtype: List[List[int]]

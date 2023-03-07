@@ -1,15 +1,10 @@
-# Definition for singly - linked list.
 from typing import Optional
 
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+from utils.list_node import ListNode
 
 
 class Solution:
-    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:
+    def mergeTwoLists(self, list1: Optional[ListNode], list2: Optional[ListNode]) -> Optional[ListNode]:  # noqa
         dummy = mergelist = ListNode()
         while list1 and list2:
             if list1.val < list2.val:

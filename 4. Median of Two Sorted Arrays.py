@@ -2,7 +2,7 @@ from typing import List
 
 
 class Solution:
-    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:
+    def findMedianSortedArrays(self, nums1: List[int], nums2: List[int]) -> float:  # noqa
         arr = nums1 + nums2
         arr_len = len(arr)
         for i in range(arr_len):

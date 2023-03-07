@@ -1,5 +1,5 @@
 class Solution:
-    def intToRoman(self, num: int) -> str:
+    def intToRoman(self, num: int) -> str:  # noqa
         dic = {
             "M": 1000,
             "CM": 900,

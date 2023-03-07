@@ -3,7 +3,7 @@ from typing import List
 
 class Solution:
     # My Solution
-    def generateParenthesis(self, n: int) -> List[str]:
+    def generateParenthesis(self, n: int) -> List[str]:  # noqa
         pair_len = n * 2
         store = []
 
@@ -22,7 +22,7 @@ class Solution:
         return store
 
     # Better solution from leetcode
-    def generateParenthesis(self, n: int) -> List[str]:
+    def generateParenthesis1(self, n: int) -> List[str]:  # noqa
         def dfs(left, right, s):
             if len(s) == n * 2:
                 res.append(s)

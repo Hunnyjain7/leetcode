@@ -1,5 +1,5 @@
 class Solution(object):
-    def myAtoi(self, s):
+    def myAtoi(self, s):  # noqa
         """
         :type s: str
         :rtype: int

@@ -1,5 +1,5 @@
 class Solution(object):
-    def longestCommonPrefix(self, strs):
+    def longestCommonPrefix(self, strs):  # noqa
         """
         :type strs: List[str]
         :rtype: str

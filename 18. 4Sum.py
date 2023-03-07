@@ -1,6 +1,6 @@
 # TLE
 class Solution(object):
-    def fourSum(self, nums, target):
+    def fourSum(self, nums, target):  # noqa
         """
         :type nums: List[int]
         :type target: int
