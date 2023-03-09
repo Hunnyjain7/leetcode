@@ -6,45 +6,57 @@ from utils.list_node import ListNode
 
 class Solution:
     def reverseKGroup(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:  # noqa
-        dummy = ListNode()
-
-        queue = deque()
+        temp = head
+        adummy = dummy = ListNode()
         count = 1
-        while head:
-            print(count)
+        initial = None
+        last = None
+        while temp:
+            if not last:
+                last = temp
             if count == k:
-                count = 1
-                # dummy.next = head
-                print(queue)
-                curr = temp = queue.popleft()
-                i = 1
-                while temp:
-                    if i == k:
-                        temp.next = None
-                        print("curr", curr)
-                        prev = None
-                        while curr:
-                            next = curr.next
-                            curr.next = prev
-                            prev = curr
-                            curr = next
-                        while dummy:
-                            if not dummy.next:
-                                dummy.next = prev
-                                break
+                if temp.next:
+                    nex = temp.next
+                else:
+                    nex = None
 
-                        # dummy.next = prev
-                        print("reversed prev", prev)
-                        # break
-                    i += 1
-                    temp = temp.next
-                # break
-                queue = deque()
+                temp.next = None
+
+                prev = None
+                curr = initial
+                while curr:
+                    next = curr.next
+                    curr.next = prev
+                    prev = curr
+                    curr = next
+
+                while dummy:
+                    if not dummy.next:
+                        dummy.next = prev or temp
+                        break
+                    dummy = dummy.next
+                temp = nex
+                last = None
+                count = 1
+                initial = None
             else:
-                queue.append(head)
                 count += 1
-            head = head.next
-        return dummy.next
+                if not initial:
+                    initial = temp
+                temp = temp.next
+        if last:
+            while dummy:
+                if not dummy.next:
+                    dummy.next = last
+                    break
+                dummy = dummy.next
+        elif temp:
+            while dummy:
+                if not dummy.next:
+                    dummy.next = temp
+                    break
+                dummy = dummy.next
+        return adummy.next
 
 
 if __name__ == '__main__':
