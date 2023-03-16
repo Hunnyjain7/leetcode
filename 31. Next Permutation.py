@@ -2,17 +2,54 @@ from typing import List
 
 
 class Solution:
+    permutation = []
+
     def nextPermutation(self, nums: List[int]) -> None:  # noqa
         """
         Do not return anything, modify nums in-place instead.
         """
+        nums_len = len(nums)
+
+        def rev(nums, start):  # noqa
+            end = nums_len - 1
+            while start < end:
+                nums[start], nums[end] = nums[end], nums[start]
+                start += 1
+                end -= 1
+
+        i = nums_len - 2
+        while i >= 0 and nums[i + 1] <= nums[i]:
+            i -= 1
+        if i >= 0:
+            j = nums_len - 1
+            while nums[j] <= nums[i]:
+                j -= 1
+            nums[i], nums[j] = nums[j], nums[i]
+        rev(nums, i + 1)
+
+    # tried sol not worked
+    def nextPermutation3(self, nums: List[int]):  # noqa
+        """
+        """
+        dummy = nums.copy()
         nums.sort()
-        permutations = []
-        for i in range(len(nums)):
-            for j in range(i+1, len(nums)):
-                pass
+        self.perm(nums, [], dummy)
+        take = False
+        for i in self.permutation:
+            if take:
+                nums = i
+                break
+            if i == dummy:
+                take = True
 
+    def perm(self, start, end=[], dummy=None):
+        if len(start) == 0:
+            self.permutation.append(end)
+        else:
+            for i in range(len(start)):
+                self.perm(start[:i] + start[i + 1:], end + start[i:i + 1], dummy)
 
+    # tried sol not worked
     def nextPermutation2(self, nums: List[int]) -> None:  # noqa
         """
         Do not return anything, modify nums in-place instead.
