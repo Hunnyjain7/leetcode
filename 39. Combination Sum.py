@@ -1,8 +1,34 @@
 from typing import List
 
 
-class Solution:
-    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:  # noqa
+class Solution(object):
+    def combinationSum(self, candidates, target):  # noqa
+        """
+        :type candidates: List[int]
+        :type target: int
+        :rtype: List[List[int]]
+        """
+        currset, subsets = [], set()
+        candidates_len = len(candidates)
+
+        def combination(i, currset, currsum):  # noqa
+            curr = currset.copy()
+            if currsum > target:
+                return
+            if currsum == target:
+                subsets.add(tuple(curr))
+                return
+            if i >= candidates_len:
+                return
+
+            for j in range(i, candidates_len):
+                combination(j, currset + [candidates[j]], currsum + candidates[j])
+
+        combination(0, currset, 0)
+        subsets = list(subsets)
+        return subsets
+
+    def combinationSum3(self, candidates: List[int], target: int) -> List[List[int]]:  # noqa
         store = set()
         for i in range(len(candidates)):
             for j in (i + 1, len(candidates) + 1):
@@ -70,4 +96,4 @@ class Solution:
 
 
 if __name__ == '__main__':
-    print(Solution().combinationSum([7, 3, 2], 7))
+    print(Solution().combinationSum([2, 3, 6, 7], 7))
