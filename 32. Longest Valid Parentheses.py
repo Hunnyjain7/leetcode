@@ -1,22 +1,27 @@
 from datetime import datetime
 
 
-class Solution:
-    def longestValidParentheses(self, s: str) -> int:  # noqa
-        st = datetime.now()
+class Solution(object):
+    def longestValidParentheses(self, s):
+        """
+        :type s: str
+        :rtype: int
+        """
         initial_len = len(s)
         largest = 0
-
+        mapper = []
         for i in range(initial_len):
             for j in range(i + 1, initial_len + 1):
                 new_s = ns = s[i:j]
                 new_s_len = len(new_s)
                 if new_s_len > largest:
+                    while len(mapper) > 1 and ns in mapper[-1]:
+                        ns = ns.replace(mapper[-1], "")
                     while "()" in ns:
                         ns = ns.replace("()", "")
                     if len(ns) == 0 and new_s_len > largest:
                         largest = new_s_len
-        print(datetime.now() - st)
+                        mapper.append(new_s)
         return largest
 
 
