@@ -5,16 +5,17 @@ class Solution:
     def jump(self, nums: List[int]) -> int:
         nums_len = len(nums)
         jumps = 0
+        valid_len = nums_len - 1
 
-        def helper(i):
-            if nums[i] == 0:
+        def helper(i, j, step):  # noqa
+            if i == 0:
                 return
 
         for i in nums:
             for j in range(1, i):
-                helper(j)
+                jumps = min(helper(i, j, 0), jumps)
 
-        return 0
+        return jumps
 
 
 if __name__ == '__main__':
