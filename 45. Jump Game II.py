@@ -31,7 +31,7 @@ class Solution:
                     break
                 elif memo[j] > memo[i] + 1:
                     memo[j] = memo[i] + 1
-        return memo[n]
+        return memo[n]  # noqa
 
 
 if __name__ == '__main__':

@@ -4,6 +4,21 @@ class Solution:
             s = s.replace('()', '').replace('[]', '').replace('{}', '')
         return False if len(s) != 0 else True
 
+    def isValid2(self, s: str) -> bool:  # noqa
+        CLOSING = {
+            '(': ')',
+            '{': '}',
+            '[': ']'
+        }
+
+        st = []
+        for c in s:
+            if c in CLOSING:
+                st.append(CLOSING[c])
+            elif not st or c != st.pop():
+                return False
+        return not st
+
 
 if __name__ == '__main__':
     print(Solution().isValid("({[]})"))
