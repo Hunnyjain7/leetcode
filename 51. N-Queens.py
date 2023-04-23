@@ -2,9 +2,38 @@ from typing import List
 
 
 class Solution:
-    # Unsolved better  attempt of lettcode solutions
-    # https://leetcode.com/problems/n-queens/solutions/3244489/beats-99-80-python3-solution/?languageTags=python3&topicTags=backtracking
     def solveNQueens(self, n: int) -> List[List[str]]:  # noqa
+        cols = set()
+        pos_diag = set()  # (r + c)
+        neg_diag = set()  # (r - c)
+        board = [["."] * n for _ in range(n)]
+        res = []
+
+        def backtrack(r):
+            if r >= n:
+                res.append(["".join(i) for i in board])
+                return
+
+            for c in range(n):
+                if c in cols or (r + c) in pos_diag or (r - c) in neg_diag:
+                    continue
+
+                cols.add(c)
+                pos_diag.add(r + c)
+                neg_diag.add(r - c)
+                board[r][c] = "Q"
+
+                backtrack(r + 1)
+
+                cols.remove(c)
+                pos_diag.remove(r + c)
+                neg_diag.remove(r - c)
+                board[r][c] = "."
+
+        backtrack(0)
+        return res
+
+    def solveNQueens2(self, n: int) -> List[List[str]]:  # noqa
         if n == 1:
             return [["Q"]]
         if n == 3:
@@ -68,38 +97,3 @@ class Solution:
 # [[".Q..","...Q","Q...","..Q."],["..Q.","Q...","...Q",".Q.."]]
 if __name__ == '__main__':
     print(Solution().solveNQueens(4))
-    # def solveNQueens(self, n: int) -> List[List[str]]:  # noqa
-    #     combs = []
-    #     prev = ["Q" + ("." * (n-1)) for _ in range(n)]
-    #     print(prev)
-    #     r, c = 0, 0
-    #     r_end = len(prev[0])
-    #     c_end = len(prev)
-    #     while r < r_end and c < c_end:
-    #         positions = [None, None, None, None, None, None, None, None]
-    #         tl, t, tr, ll, rr, bl, b, br = None, None, None, None, None, None, None, None
-    #         if (r - 1) >= 0:
-    #             if (c - 1) >= 0:
-    #                 tl = prev[r - 1][c - 1]
-    #             t = prev[r - 1][c]
-    #             if (c + 1) < len(prev):
-    #                 tr = prev[r - 1][c + 1]
-    #         if (c + 1) < len(prev):
-    #             rr = prev[r][c + 1]
-    #             if (r + 1) < len(prev):
-    #                 br = prev[r + 1][c + 1]
-    #         if (c - 1) >= 0:
-    #             ll = prev[r][c - 1]
-    #         if (r + 1) < len(prev):
-    #             b = prev[r + 1][c]
-    #             if (c - 1) >= 0:
-    #                 bl = prev[r + 1][c - 1]
-    #
-    #         print(tl, t, tr, ll, rr, bl, b, br)
-    #
-    #         if c == c_end - 1:
-    #             c = 0
-    #             r += 1
-    #         else:
-    #             c += 1
-    #     return combs
