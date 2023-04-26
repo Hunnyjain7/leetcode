@@ -1,77 +1,41 @@
 from typing import Optional
 
-
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
+from utils.list_node import ListNode
 
 
 class Solution:
     def rotateRight(self, head: Optional[ListNode], k: int) -> Optional[ListNode]:  # noqa
-        cur = curr = head
+        curr = head
+        if not head or not head.next or k == 0:
+            return head
+
+        def length(head: ListNode):  # noqa
+            return 0 if not head else 1 + length(head.next)
+
+        node_length = length(curr)
+        k = k % node_length
+        if k == 0:
+            return head
         new = ListNode()
-        if not head or not head.next or k == 0:
-            return head
-
-        # recursive
-        def length(node: ListNode):
-            return 0 if not node else 1 + length(node.next)
-
-        lll = length(cur)
-        print(lll)
-        k = k % lll
-        if not head or not head.next or k == 0:
-            return head
-
-        print(k)
-        gotcha = False
-        while k >= 0 and head.next:
+        for k in range(node_length - k):
             temp = head
             head = head.next
             temp.next = None
             while new.next:
                 new = new.next
             new.next = temp
-            k -= 1
-            if not head.next and k == 0:
-                print("in")
-                gotcha = True
-            print(head)
-            print("temp", temp)
-            print("curr", curr)
-            print("new", new)
-            print("====================")
 
         clone = head
         while head.next:
             head = head.next
-        print("clone", clone)
-        print("head", head)
         head.next = curr
-        print("clone", clone)
-        print("head", head)
-
-        def rearrange(hea):
-            # proceed only when the list is valid
-            if hea is None or hea.next is None:
-                return hea
-
-            ptr = hea
-
-            # move to the second last node
-            while ptr.next.next:
-                ptr = ptr.next
-
-            # transform the list into a circular list
-            ptr.next.next = hea
-
-            hea = ptr.next  # Fix head
-            ptr.next = None  # break the chain
-            return hea
-
-        if gotcha:
-            return rearrange(clone)
-
-        print("ENDED")
         return clone
+
+
+if __name__ == '__main__':
+    node = ListNode(1)
+    node.next = ListNode(2)
+    node.next = ListNode(3)
+    node.next = ListNode(4)
+    node.next = ListNode(5)
+    print(Solution().rotateRight(node, 2))
