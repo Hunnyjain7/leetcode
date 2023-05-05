@@ -2,7 +2,7 @@ class Solution:
     def climbStairs(self, n: int) -> int:  # noqa
         memo = {1: 1, 2: 2}
 
-        def brute_force(n):
+        def brute_force(n):  # noqa
             if n in memo:
                 return memo[n]
             else:
