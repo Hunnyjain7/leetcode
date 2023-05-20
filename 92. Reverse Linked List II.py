@@ -10,28 +10,33 @@ class Solution:
 
         temp = head
         temp_node = None
-        previous = None
+        count = 1
         while head:
-            if head.val == left:
-                while head.val != right:
+            if count == left:
+                while count != right:
                     prev = ListNode(head.val, temp_node)
                     temp_node = prev
                     head = head.next
-                    if head.val == right:
+                    count += 1
+                    if count == right:
                         prev = ListNode(head.val, temp_node)
                         temp_node = prev
                         break
-            if head.val == right:
+            if count == right:
                 break
-            previous = head.val
             head = head.next
+            count += 1
 
         new_node = temp_node
         while temp_node.next:
             temp_node = temp_node.next
         temp_node.next = head.next
 
-        while temp.val != previous:
-            temp = temp.next
-        temp.next = new_node
-        return temp
+        temp_new_node = temp
+        if left != 1:
+            count = 1
+            while temp.next and count != left - 1:
+                temp = temp.next
+                count += 1
+            temp.next = new_node
+        return temp_new_node if left != 1 else new_node
