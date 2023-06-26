@@ -4,12 +4,7 @@ You may assume the two numbers do not contain any leading zero, except the numbe
 Input: l1 = [2,4,3], l2 = [5,6,4]
 Output: [7,0,8]
 Explanation: 342 + 465 = 807."""
-
-
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+from utils.list_node import ListNode
 
 
 def lst2link(lst):
@@ -46,8 +41,7 @@ class Solution(object):
         for i in l2:
             l2_str += str(i)
         l1_l2 = [int(i) for i in str(int(l1_str) + int(l2_str))]
-        a = lst2link(l1_l2[::-1])
-        return a
+        return lst2link(l1_l2[::-1])
 
 
 obj = Solution()
