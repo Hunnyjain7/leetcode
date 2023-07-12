@@ -38,40 +38,23 @@ from typing import List
 
 class Solution:
     def compress(self, chars: List[str]) -> int:  # noqa
-        s, prev, count, skip_count = "", "", 0, 0
-        for idx, char in enumerate(chars):
-            print(chars)
-            if skip_count:
-                print("skipped")
-                skip_count -= 1
-                continue
-            if prev and count and prev != char:
-                if count > 1:
-                    pop_count = count
-                    for i in range(1, pop_count):
-                        chars.pop(idx - i)
-                    print(idx, count)
-                    count_str = str(count)
-                    skip_count = len(count_str) - 1
-                    for i in range(skip_count + 1):
-                        chars.insert(idx - 1, count_str[i])
+        chars_len = len(chars)
+        i, left, right = 0, 0, 0
+        while left < chars_len:
+            while right < chars_len and chars[left] == chars[right]:
+                right += 1
 
-                count = 0
-            prev = char
-            count += 1
+            chars[i] = chars[left]
+            i += 1
 
-        if count > 1:
-            pop_count = count
-            for i in range(1, pop_count):
-                chars.pop()
-            # print(idx, count)
-            count_str = str(count)
-            skip_count = len(count_str) - 1
-            for i in range(skip_count + 1):
-                chars.append(count_str[i])
-
-        print(chars)
+            diff = right - left
+            if diff > 1:
+                for d in str(diff):
+                    chars[i] = d
+                    i += 1
+            left = right
+        return i
 
 
 if __name__ == '__main__':
-    print(Solution().compress(["a", "a", "b", "b", "c", "c", "c", "2"]))
+    print(Solution().compress(["a", "b", "b", "b", "4", "b", "b", "b", "r", "a", "b", "b", "b", "b", "5", "b", "b"]))
