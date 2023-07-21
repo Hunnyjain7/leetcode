@@ -45,12 +45,14 @@ from typing import List
 class Solution:
     def pivotIndex(self, nums: List[int]) -> int:  # noqa
         i, left_sum, right_sum, nums_len = 0, 0, sum(nums) - nums[0], len(nums)
+        if left_sum == right_sum:
+            return 0
         for i in range(1, nums_len):
+            left_sum += nums[i - 1]
+            right_sum -= nums[i]
             if left_sum == right_sum:
-                break
-            left_sum += nums[i]
-            right_sum -= nums[i - 1]
-        return 0 if left_sum == right_sum else -1 if i == (nums_len - 1) else i - 1
+                return i
+        return -1
 
 
 if __name__ == '__main__':
