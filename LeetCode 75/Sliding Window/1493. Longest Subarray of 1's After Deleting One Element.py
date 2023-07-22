@@ -30,7 +30,7 @@ from typing import List
 
 
 class Solution:
-    def longestSubarray(self, nums: List[int]) -> int:
+    def longestSubarray(self, nums: List[int]) -> int:  # noqa
         left = right = 0
 
         k = 1
@@ -45,5 +45,6 @@ class Solution:
 
         return right - left
 
+
 if __name__ == '__main__':
-    print(Solution().longestSubarray([1,0,1,0,1,0]))
+    print(Solution().longestSubarray([1, 0, 1, 0, 1, 0]))
