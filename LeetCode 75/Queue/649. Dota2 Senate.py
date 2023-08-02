@@ -43,8 +43,23 @@ senate[i] is either 'R' or 'D'."""
 
 
 class Solution:
-    def predictPartyVictory(self, senate: str) -> str:
-        pass
+    def predictPartyVictory(self, senate: str) -> str:  # noqa
+        senate_len = len(senate)
+        radiant, dire = [], []
+        for i in range(len(senate)):
+            if senate[i] == "R":
+                radiant.append(i)
+            else:
+                dire.append(i)
+
+        while radiant and dire:
+            senate_len += 1
+            if radiant[0] < dire[0]:
+                radiant.append(senate_len)
+            else:
+                dire.append(senate_len)
+            radiant.pop(0), dire.pop(0)
+        return "Radiant" if radiant else "Dire"
 
 
 if __name__ == '__main__':
