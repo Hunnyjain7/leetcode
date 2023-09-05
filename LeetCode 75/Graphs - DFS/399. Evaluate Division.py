@@ -46,11 +46,41 @@ values.length == equations.length
 queries[i].length == 2
 1 <= Cj.length, Dj.length <= 5
 Ai, Bi, Cj, Dj consist of lower case English letters and digits."""
+from collections import defaultdict, deque
 from typing import List
 
 
 class Solution:
+
     def calcEquation(  # noqa
+            self, equations: List[List[str]], values: List[float], queries: List[List[str]]
+    ) -> List[float]:
+        adj_list = defaultdict(list)
+        for idx, equation in enumerate(equations):
+            a, b = equation
+            adj_list[a].append([b, values[idx]])
+            adj_list[b].append([a, 1 / values[idx]])
+
+        def dfs(src, target):
+            if src not in adj_list or target not in adj_list:
+                return -1
+
+            q, visit = deque(), set()
+            q.append([src, 1])
+            visit.add(src)
+            while q:
+                n, w = q.popleft()
+                if n == target:
+                    return w
+                for nei, weight in adj_list[n]:
+                    if nei not in visit:
+                        q.append([nei, weight * w])
+                        visit.add(nei)
+            return -1
+
+        return [dfs(query[0], query[1]) for query in queries]
+
+    def calcEquation2(  # noqa
             self, equations: List[List[str]], values: List[float], queries: List[List[str]]
     ) -> List[float]:
         adj_list = {}
